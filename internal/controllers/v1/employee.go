@@ -66,10 +66,10 @@ func (controller *employeeController) GetContacts(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	var employeeContacts []*response.EmployeeContact
+
 	if totalCount == 0 {
 		c.JSON(http.StatusOK, response.EmployeeContactWithPagination{
-			Employees: employeeContacts,
+			Employees: []*response.EmployeeContact{},
 			Pagination: response.Pagination{Total: totalCount,
 				Page: page,
 				Size: size},
@@ -81,7 +81,7 @@ func (controller *employeeController) GetContacts(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
-
+	var employeeContacts []*response.EmployeeContact
 	for _, employee := range employees {
 		employeeContact := response.EmployeeContact{
 			Name:          employee.Name,

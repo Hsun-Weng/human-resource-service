@@ -86,15 +86,16 @@ func (controller *leaveController) GetLeaves(c *gin.Context) {
 		if !checked {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid status"})
 		}
+		return
 	}
 	totalCount, err := controller.service.GetLeaveTotalCount(status)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	var leavesResponse []*response.Leave
+
 	if totalCount == 0 {
-		c.JSON(http.StatusOK, response.LeaveWithPagination{Leaves: leavesResponse,
+		c.JSON(http.StatusOK, response.LeaveWithPagination{Leaves: []*response.Leave{},
 			Pagination: response.Pagination{Total: totalCount, Page: page, Size: size}})
 		return
 	}
@@ -104,6 +105,7 @@ func (controller *leaveController) GetLeaves(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
 		return
 	}
+	var leavesResponse []*response.Leave
 	for _, leave := range leaves {
 		leaveResponse := response.Leave{
 			ID:        leave.ID,
@@ -129,6 +131,7 @@ func (controller *leaveController) GetLeaves(c *gin.Context) {
 // @Produce  json
 // @Param Authorization header string true "Bearer Token"
 // @Param reviewLeaveRequest body requests.ReviewLeaveRequest true "Leave request details"
+// @Param id path int true "Leave ID"
 // @Success 200 {string} review leave successfully "Success Message"
 // @Router /admin/v1/leaves/{id} [put]
 func (controller *leaveController) ReviewLeaves(c *gin.Context) {

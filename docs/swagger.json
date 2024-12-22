@@ -133,6 +133,13 @@
                         "schema": {
                             "$ref": "#/definitions/requests.ReviewLeaveRequest"
                         }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Leave ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -257,7 +264,7 @@
         "requests.CreateLeaveRequest": {
             "type": "object",
             "properties": {
-                "end_time": {
+                "end_date": {
                     "type": "string"
                 },
                 "leave_type": {
@@ -266,7 +273,7 @@
                 "reason": {
                     "type": "string"
                 },
-                "start_time": {
+                "start_date": {
                     "type": "string"
                 }
             }

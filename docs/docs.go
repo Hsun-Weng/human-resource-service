@@ -140,6 +140,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/requests.ReviewLeaveRequest"
                         }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Leave ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -264,7 +271,7 @@ const docTemplate = `{
         "requests.CreateLeaveRequest": {
             "type": "object",
             "properties": {
-                "end_time": {
+                "end_date": {
                     "type": "string"
                 },
                 "leave_type": {
@@ -273,7 +280,7 @@ const docTemplate = `{
                 "reason": {
                     "type": "string"
                 },
-                "start_time": {
+                "start_date": {
                     "type": "string"
                 }
             }
