@@ -1,0 +1,244 @@
+definitions:
+  requests.CreateLeaveRequest:
+    properties:
+      end_time:
+        type: string
+      leave_type:
+        type: string
+      reason:
+        type: string
+      start_time:
+        type: string
+    type: object
+  requests.ReviewLeaveRequest:
+    properties:
+      status:
+        type: string
+    type: object
+  response.EmployeeContact:
+    properties:
+      company_email:
+        type: string
+      job_role:
+        type: string
+      living_address:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      salary:
+        type: number
+    type: object
+  response.EmployeeContactWithPagination:
+    properties:
+      employees:
+        items:
+          $ref: '#/definitions/response.EmployeeContact'
+        type: array
+      pagination:
+        $ref: '#/definitions/response.Pagination'
+    type: object
+  response.Leave:
+    properties:
+      created_at:
+        type: string
+      end_date:
+        type: string
+      id:
+        type: integer
+      leave_type:
+        type: string
+      reason:
+        type: string
+      start_date:
+        type: string
+      status:
+        type: string
+    type: object
+  response.LeaveWithPagination:
+    properties:
+      leaves:
+        items:
+          $ref: '#/definitions/response.Leave'
+        type: array
+      pagination:
+        $ref: '#/definitions/response.Pagination'
+    type: object
+  response.Pagination:
+    properties:
+      page:
+        type: integer
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  v1.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: The simple hr management service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Human resource service
+  version: "1.0"
+paths:
+  /admin/v1/contacts:
+    get:
+      description: Get a list of employees with their basic contact information like
+        name, email, phone, etc.
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of contacts per page
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.EmployeeContactWithPagination'
+      summary: Get a list of employee contacts by admin
+      tags:
+      - Contacts
+  /admin/v1/leaves:
+    get:
+      description: Get a list of leave details
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of leaves per page
+        in: query
+        name: size
+        type: integer
+      - description: Status for query
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of leaves
+          schema:
+            items:
+              $ref: '#/definitions/response.LeaveWithPagination'
+            type: array
+      summary: Get a list of leaves by admin
+      tags:
+      - Leave
+  /admin/v1/leaves/{id}:
+    put:
+      description: Review the employee's leave application by admin
+      parameters:
+      - description: Leave request details
+        in: body
+        name: reviewLeaveRequest
+        required: true
+        schema:
+          $ref: '#/definitions/requests.ReviewLeaveRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success Message
+          schema:
+            type: string
+      summary: Review Leave
+      tags:
+      - Leave
+  /auth/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: Login with company email and password to receive an authentication
+        token.
+      parameters:
+      - description: Login request with company email and password
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/v1.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"token": "{token}"}'
+          schema:
+            type: string
+      summary: User Login
+      tags:
+      - Authentication
+  /user/v1/contact:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve contact details of an employee by their Token.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.EmployeeContact'
+      summary: Get Employee Contact Information
+      tags:
+      - Contacts
+  /user/v1/leave:
+    post:
+      consumes:
+      - application/json
+      description: Create a new leave request for the employee by providing leave
+        details.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Leave request details
+        in: body
+        name: createLeaveRequest
+        required: true
+        schema:
+          $ref: '#/definitions/requests.CreateLeaveRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: create leave successfully
+          schema:
+            type: string
+      summary: Create a Leave Request
+      tags:
+      - Leave
+swagger: "2.0"

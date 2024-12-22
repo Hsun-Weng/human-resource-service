@@ -1,4 +1,18 @@
 services:
+  app:
+    image: human-resource-service:latest
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DB_HOST: "db"
+      DB_PORT: "3306"
+      DB_USER: "root"
+      DB_PASS: "human_resource"
+      DB_NAME: "human_resource"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+    restart: always
   db:
     image: mysql:9
     ports:
