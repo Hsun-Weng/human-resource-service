@@ -150,6 +150,11 @@ func (controller *leaveController) ReviewLeaves(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	checked := leave_status.IsValidStatus(reviewLeave.Status)
+	if !checked {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid status"})
+		return
+	}
 
 	err = controller.service.ReviewLeave(uint(leaveId), reviewLeave.Status)
 	if err != nil {
