@@ -1,0 +1,19 @@
+
+
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor employee
+actor manager
+rectangle human-resource-service {
+  employee -- (login)
+  employee -- (check employee's contact)
+  employee -- (apply for leave)
+  (apply for leave) .> (approve or decline the leave application) : extends
+  (apply for leave) .> (check all leave application by status) : extends
+  (check all leave application by status) -- manager
+  (approve or decline the leave application) -- manager
+  (check all employee's contact) -- manager
+  (login) -- manager
+}
+@enduml
