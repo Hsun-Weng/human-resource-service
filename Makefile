@@ -5,7 +5,7 @@ VERSION=1.0.0
 SRC_DIR=.
 
 .PHONY: all
-all: docker-build deploy
+all: docker-build docker-compose-up
 
 .PHONY: docker-build
 docker-build:
