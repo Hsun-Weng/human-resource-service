@@ -20,7 +20,7 @@ docker-push:
 .PHONY: docker-compose-up
 docker-compose-up:
 	@echo "Starting application using Docker Compose..."
-	docker compose up -d
+	IMAGE_NAME=$(IMAGE_NAME) TAG=$(TAG) docker compose up -d
 
 .PHONY: docker-compose-down
 docker-compose-down:

@@ -99,6 +99,11 @@ paths:
       description: Get a list of employees with their basic contact information like
         name, email, phone, etc.
       parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - default: 1
         description: Page number
         in: query
@@ -123,6 +128,11 @@ paths:
     get:
       description: Get a list of leave details
       parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - default: 1
         description: Page number
         in: query
@@ -153,6 +163,11 @@ paths:
     put:
       description: Review the employee's leave application by admin
       parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Leave request details
         in: body
         name: reviewLeaveRequest

@@ -32,7 +32,7 @@ func (adminAuth *adminAuthenticationMiddleware) AdminAuthHandler() gin.HandlerFu
 			return
 		}
 		if cacheEmployee.Role != string(job_role.Manager) {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header is required"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
 			c.Abort()
 			return
 		}

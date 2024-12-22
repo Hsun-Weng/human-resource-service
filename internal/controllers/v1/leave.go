@@ -71,6 +71,7 @@ func (controller *leaveController) CreateLeave(c *gin.Context) {
 // @Description Get a list of leave details
 // @Tags Leave
 // @Produce  json
+// @Param Authorization header string true "Bearer Token"
 // @Param page query int false "Page number" default(1)
 // @Param size query int false "Number of leaves per page" default(10)
 // @Param status query string false "Status for query"
@@ -126,6 +127,7 @@ func (controller *leaveController) GetLeaves(c *gin.Context) {
 // @Description Review the employee's leave application by admin
 // @Tags Leave
 // @Produce  json
+// @Param Authorization header string true "Bearer Token"
 // @Param reviewLeaveRequest body requests.ReviewLeaveRequest true "Leave request details"
 // @Success 200 {string} review leave successfully "Success Message"
 // @Router /admin/v1/leaves/{id} [put]

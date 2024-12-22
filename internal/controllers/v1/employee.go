@@ -53,6 +53,7 @@ func (controller *employeeController) GetContact(c *gin.Context) {
 // @Description Get a list of employees with their basic contact information like name, email, phone, etc.
 // @Tags Contacts
 // @Produce  json
+// @Param Authorization header string true "Bearer Token"
 // @Param page query int false "Page number" default(1)
 // @Param size query int false "Number of contacts per page" default(10)
 // @Success 200 {object} response.EmployeeContactWithPagination

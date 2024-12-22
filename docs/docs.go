@@ -31,6 +31,13 @@ const docTemplate = `{
                 "summary": "Get a list of employee contacts by admin",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "type": "integer",
                         "default": 1,
                         "description": "Page number",
@@ -66,6 +73,13 @@ const docTemplate = `{
                 ],
                 "summary": "Get a list of leaves by admin",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "default": 1,
@@ -111,6 +125,13 @@ const docTemplate = `{
                 ],
                 "summary": "Review Leave",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Leave request details",
                         "name": "reviewLeaveRequest",
