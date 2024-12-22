@@ -85,8 +85,8 @@ func (controller *leaveController) GetLeaves(c *gin.Context) {
 		checked := leave_status.IsValidStatus(status)
 		if !checked {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid status"})
+			return
 		}
-		return
 	}
 	totalCount, err := controller.service.GetLeaveTotalCount(status)
 	if err != nil {
